@@ -11,6 +11,6 @@ simulate a real-time periodic load.
 
 Code is currently maintained on GitHub:
 
-	[RT-APP Repository](http://github.com/scheduler-tools/rt-app)
+[RT-APP Repository](https://github.com/scheduler-tools/rt-app)
 
 ## Contents of Repository
