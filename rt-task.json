@@ -1,0 +1,48 @@
+{
+   "tasks" : {
+        "thread0" : {
+                "priority" : 88,
+				"phases" : {
+					"phase1" : {
+						"loop" : 1,
+						"run" : 50,
+						"timer" : { "ref" : "unique", "period" : 1000 },
+						"fork" : "thread1",
+					},
+					"phase2" : {
+						"loop" : 1,
+						"run" : 50,
+						"timer" : { "ref" : "unique", "period" : 1000 },
+						"fork" : "thread2",
+					},
+					"phase3" : {
+					    "loop" : -1,
+						"run" : 50,
+						"timer" : { "ref" : "unique", "period" : 1000 },
+					},
+				},
+        },
+        "thread1" : {
+				"instance" : 0,
+                "loop" : -1,
+                "priority" : 87,
+                "run" : 250,
+                "timer" : { "ref" : "unique", "period" : 5000 }
+        },
+        "thread2" : {
+				"instance" : 0,
+                "loop" : -1,
+                "priority" : 86,
+                "run" : 500,
+                "timer" : { "ref" : "unique", "period" : 10000 }
+        }
+   },
+   "global" : {
+        "duration" : 10,
+        "calibration" : "CPU1",
+        "default_policy" : "SCHED_FIFO",
+        "lock_pages" : true,
+        "logdir" : "./",
+        "log_basename" : "rt-app1",
+   }
+}
