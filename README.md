@@ -107,5 +107,54 @@ Now let's set the tuned profile and reboot for the changes to take effect.
 # reboot
 ~~~
 
+To capture a kernel trace which we can view with KernelShark we will need to install `trace-cmd`
+
+~~~bash
+# dnf install -y trace-cmd
+Updating Subscription Management repositories.
+Last metadata expiration check: 1:43:35 ago on Tue 23 Apr 2024 01:02:02 PM EDT.
+Dependencies resolved.
+==============================================================================================================================================================================================================================================
+ Package                                                   Architecture                                         Version                                                     Repository                                                   Size
+==============================================================================================================================================================================================================================================
+Installing:
+ trace-cmd                                                 x86_64                                               2.9.2-10.el9                                                beaker-BaseOS                                               233 k
+Installing dependencies:
+ libtracecmd                                               x86_64                                               0-10.el9                                                    beaker-BaseOS                                               100 k
+ libtracefs                                                x86_64                                               1.3.1-1.el9                                                 beaker-BaseOS                                                75 k
+
+Transaction Summary
+==============================================================================================================================================================================================================================================
+Install  3 Packages
+
+Total download size: 408 k
+Installed size: 893 k
+Is this ok [y/N]: y
+Downloading Packages:
+(1/3): libtracecmd-0-10.el9.x86_64.rpm                                                                                                                                                                        6.4 MB/s | 100 kB     00:00    
+(2/3): libtracefs-1.3.1-1.el9.x86_64.rpm                                                                                                                                                                      4.2 MB/s |  75 kB     00:00    
+(3/3): trace-cmd-2.9.2-10.el9.x86_64.rpm                                                                                                                                                                       11 MB/s | 233 kB     00:00    
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                                                                          19 MB/s | 408 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                                                                                      1/1 
+  Installing       : libtracefs-1.3.1-1.el9.x86_64                                                                                                                                                                                        1/3 
+  Installing       : libtracecmd-0-10.el9.x86_64                                                                                                                                                                                          2/3 
+  Installing       : trace-cmd-2.9.2-10.el9.x86_64                                                                                                                                                                                        3/3 
+  Running scriptlet: trace-cmd-2.9.2-10.el9.x86_64                                                                                                                                                                                        3/3 
+  Verifying        : libtracecmd-0-10.el9.x86_64                                                                                                                                                                                          1/3 
+  Verifying        : libtracefs-1.3.1-1.el9.x86_64                                                                                                                                                                                        2/3 
+  Verifying        : trace-cmd-2.9.2-10.el9.x86_64                                                                                                                                                                                        3/3 
+Installed products updated.
+
+Installed:
+  libtracecmd-0-10.el9.x86_64                                                  libtracefs-1.3.1-1.el9.x86_64                                                  trace-cmd-2.9.2-10.el9.x86_64                                                 
+Complete!
+~~~
+
 
 
