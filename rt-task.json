@@ -39,7 +39,7 @@
    },
    "global" : {
         "duration" : 10,
-        "calibration" : "CPU1",
+        "calibration" : "CPU4",
         "default_policy" : "SCHED_FIFO",
         "lock_pages" : true,
         "logdir" : "./",
