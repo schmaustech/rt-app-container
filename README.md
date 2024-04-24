@@ -19,6 +19,24 @@ Code is currently maintained on GitHub:
 * entrypoint.sh - The script that runs within the container to kickoff the rt-app workload
 * rt-task.json - The sample json to feed rt-app in the container which will mimick our workload
 
+### Build the Container
+
+We can build the container using the files in the repository.
+
+~~~bash
+# podman build -f Dockerfile -t quay.io/bschmaus/rt-app-container:latest
+[1/2] STEP 1/7: FROM registry.access.redhat.com/ubi9/ubi-minimal:9.3 AS builder
+[1/2] STEP 2/7: RUN echo "builder:x:1001:" >> /etc/group &&     echo "builder:x:1001:1001:Builder:/home/build:/bin/bash" >> /etc/passwd &&     install -o builder -g builder -m 0700 -d /home/build
+--> Using cache 3a05dd8b2a4da05ef3af9f0ed71ad3033f7f9ecd36c1554a9fc12237f39a41a6
+--> 3a05dd8b2a4d
+(...)
+[2/2] STEP 11/11: ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+[2/2] COMMIT quay.io/bschmaus/rt-app-container:latest
+--> c7764c58580b
+Successfully tagged quay.io/bschmaus/rt-app-container:latest
+c7764c58580b549c18f1a2cf59194e8657620d12289573861640f608b9f0a1fe
+~~~
+
 ### Test Framework
 
 We will be doing our testing on a Red Hat Enterprise Linux 9.3 system with low latency tuned profiles.  
