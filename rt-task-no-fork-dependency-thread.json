@@ -1,0 +1,43 @@
+{
+   "tasks" : {
+        "thread0" : {
+                "instance" : 1,
+                "loop" : 10,
+                "priority" : 88,
+                "run" : 50,
+		"resume" : "thread1",
+		"suspend" : "thread0",
+                "timer" : { "ref" : "unique", "period" : 1000 }
+
+	},	
+
+        "thread1" : {
+                "instance" : 1,
+                "loop" : 10,
+                "priority" : 87,
+                "run" : 250,
+		"resume" : "thread2",
+                "suspend" : "thread1",
+                "timer" : { "ref" : "unique", "period" : 5000 }
+        },
+        "thread2" : {
+                "instance" : 1,
+                "loop" : 10,
+                "priority" : 86,
+                "run" : 500,
+		"resume" : "thread0",
+		"suspend" : "thread2",
+                "timer" : { "ref" : "unique", "period" : 10000 }
+        }
+   },
+   "global" : {
+        "duration" : 10,
+        "calibration" : "CPU4",
+        "default_policy" : "SCHED_FIFO",
+        "lock_pages" : true,
+        "logdir" : "./",
+	"ftrace" : "main,task,loop,event",
+        "log_basename" : "rt-app1",
+	"gnuplot" : true
+   }
+}
