@@ -23,7 +23,7 @@ COPY --from=builder /home/build/rt-app/src/rt-app /usr/local/bin/
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY rt-task.json /
 RUN chmod +x /usr/local/bin/entrypoint.sh
-ENV CORE_MASK="0x5"
+ENV CORE_MASK="5"
 ENV PRIORITY="99"
 ENV LOADCPU="10"
 ENV INTERVAL="1000"
