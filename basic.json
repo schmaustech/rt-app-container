@@ -1,0 +1,29 @@
+{
+	"tasks" : {
+		"UN-first" : {
+			"cpus" : [ 0 ],
+			"instance" : 	     	1,
+			"loop" :		-1,
+			"delay" :		0,
+			"run" :			50,
+			"dl-runtime" :		100,
+			"dl-period" :		1000,
+			"timer" : {
+				"ref" : "UN",
+				"period" : 1000 
+			},
+			"policy" :	"SCHED_DEADLINE"
+		}
+	},
+	"global" : {
+		"duration" : 1,
+		"default_policy" : "SCHED_OTHER",
+		"pi_enabled" : false,
+		"lock_pages" : false,
+		"logdir" : "log/",
+		"log_basename" : "rt-app-UN",
+		"ftrace" : "none",
+		"gnuplot" : false,
+		"base_clock_abs" : 0
+	}
+}
