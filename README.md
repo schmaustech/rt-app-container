@@ -15,9 +15,14 @@ Code is currently maintained on GitHub:
 
 ## Contents of Repository
 
-* Dockerfile - To build the container
-* entrypoint.sh - The script that runs within the container to kickoff the rt-app workload
-* rt-task.json - The sample json to feed rt-app in the container which will mimick our workload
+* Dockerfile - To build the container to run the tests
+* entrypoint.sh - The script that runs within the container to kickoff the rt-app workload test
+* run.sh - The script that takes Daniel's work [here](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads) and collapses it into one script and uses containers
+* basic.json - This is used to compute the CAL (Function Call Interrupt) on a core
+* single.json - 
+* template.json -
+
+References to Daniel's work: [here](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads)
 
 ### Build the Container
 
@@ -174,5 +179,7 @@ Installed:
 Complete!
 ~~~
 
+### Running a Test
 
+After we have built our container and have installed and configured out how we can run a test.  The `run.sh` script can peform three different tests which are defined by the TYPE variable inside the script.  Those tests are: single, three and broken.
 
