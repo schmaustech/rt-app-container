@@ -1,7 +1,7 @@
 {
 	"tasks" : {
 		"UN-first" : {
-			"cpus" : [ 0 ],
+			"cpus" : [ CPUS ],
 			"instance" : 	     	1,
 			"loop" :		-1,
 			"delay" :		0,
