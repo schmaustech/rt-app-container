@@ -5,11 +5,7 @@ if [ $TYPE == "single" ]; then
 fi
 # Pass three individual jsons
 if [ $TYPE == "three" ] || [ $TYPE == "broken" ]; then
-	NAME=$i-onems
-	/usr/local/bin/rt-app /jsons/$NAME.json &
-	NAME=$i-fivems
-	/usr/local/bin/rt-app /jsons/$NAME.json &
-	NAME=$i-tenms
-	/usr/local/bin/rt-app /jsons/$NAME.json &
-
+	/usr/local/bin/rt-app /jsons/$i-onems.json &
+	/usr/local/bin/rt-app /jsons/$i-fivems.json &
+	/usr/local/bin/rt-app /jsons/$i-tenms.json 
 fi
