@@ -1,0 +1,31 @@
+{
+	"tasks" : {
+		"NAME" : {
+			"cpus" : [ CPUS ],
+			"instance" : 	     	1,
+			"loop" :		-1,
+			"run" :			EXEC_TIME,
+			"resume":		"input",
+			"dl-runtime" :		DL_RUNTIME,
+			"dl-period" :		DL_PERIOD,
+			"timer" : {
+				"ref" : "NAME",
+				"period" : DL_PERIOD,
+				"mode" : "absolute"
+			},
+			"policy" :	"SCHED_DEADLINE"
+		}
+	},
+	"global" : {
+		"calibration" : CAL,
+		"duration" : DURATION,
+		"default_policy" : "SCHED_OTHER",
+		"pi_enabled" : false,
+		"lock_pages" : false,
+		"logdir" : "log/",
+		"log_basename" : "rt-app-NAME",
+		"ftrace" : "none",
+		"gnuplot" : false,
+		"base_clock_abs" : DELAY
+	}
+}
