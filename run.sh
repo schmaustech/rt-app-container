@@ -10,7 +10,7 @@ if [ ! -d jsons ]; then
 fi
 
 # Type should be one of the following: single, three, broken
-TYPE="single"
+TYPE="three"
 CPUS="5"
 EXEC_TIME=50
 DL_RUNTIME=100
@@ -18,6 +18,7 @@ DL_PERIOD=1000
 DELAY=0
 STEP=200000
 DURATION=60
+PATH=`pwd`
 
 # Update basic.json to reflect CPU used
 sed -i "s/\"cpus\" :.*/\"cpus\" : [ ${CPUS} ],/" basic.json
@@ -65,7 +66,7 @@ for i in UN DEUX TROIS; do
         		cat single.json | sed "s/NAME/$NAME/g; s/CAL/$CAL/g; s/CPUS/$CPUS/g; s/EXEC_TIME/$EXEC_TIME/ ; s/DL_RUNTIME/$DL_RUNTIME/ ; s/DL_PERIOD/$DL_PERIOD/ ; s/DURATION/$DURATION/g ; s/DELAY/$DELAY/g " > jsons/$NAME.json
 
 			let "DELAY=$DELAY + $STEP"
-   			;;
+			;;
 		broken)	
 		        EXEC_TIME=50
                         DL_RUNTIME=75
@@ -100,7 +101,7 @@ for i in UN DEUX TROIS; do
 done
 
 for i in UN DEUX TROIS; do
-			podman create --privileged --name $i-container -e TYPE=$TYPE -e i=$i -v /root/rt-dispatch/jsons:/jsons -v /root/rt-dispatch/log:/log quay.io/bschmaus/rt-app-container:latest
+			podman create --privileged --name $i-container -e TYPE=$TYPE -e i=$i -v $PATH/jsons:/jsons -v $PATH/log:/log quay.io/bschmaus/rt-app-container:latest
 			podman start $i-container
 			sleep 1 # to let the threads be created and have sequencial pid.. easier to see on kernelshark
 done
