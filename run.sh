@@ -65,6 +65,7 @@ for i in UN DEUX TROIS; do
         		cat single.json | sed "s/NAME/$NAME/g; s/CAL/$CAL/g; s/CPUS/$CPUS/g; s/EXEC_TIME/$EXEC_TIME/ ; s/DL_RUNTIME/$DL_RUNTIME/ ; s/DL_PERIOD/$DL_PERIOD/ ; s/DURATION/$DURATION/g ; s/DELAY/$DELAY/g " > jsons/$NAME.json
 
 			let "DELAY=$DELAY + $STEP"
+   			;;
 		broken)	
 		        EXEC_TIME=50
                         DL_RUNTIME=75
@@ -89,6 +90,7 @@ for i in UN DEUX TROIS; do
                         cat single.json | sed "s/NAME/$NAME/g; s/CAL/$CAL/g; s/CPUS/$CPUS/g; s/EXEC_TIME/$EXEC_TIME/ ; s/DL_RUNTIME/$DL_RUNTIME/ ; s/DL_PERIOD/$DL_PERIOD/ ; s/DURATION/$DURATION/g ; s/DELAY/$DELAY/g " > jsons/$NAME.json
 
                         let "DELAY=$DELAY + $STEP"
+			;;
 
 		*)
                         cat template.json | sed "s/NAME/$i/g; s/CAL/$CAL/g; s/CPUS/$CPUS/g; s/EXEC_TIME/$EXEC_TIME/ ; s/DL_RUNTIME/$DL_RUNTIME/ ; s/DL_PERIOD/$DL_PERIOD/ ; s/DURATION/$DURATION/g ; s/DELAY/$DELAY/g " > jsons/$i.json
