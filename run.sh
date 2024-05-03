@@ -18,7 +18,7 @@ DL_PERIOD=1000
 DELAY=0
 STEP=200000
 DURATION=60
-PATH=`pwd`
+CURRPATH=`pwd`
 
 # Update basic.json to reflect CPU used
 sed -i "s/\"cpus\" :.*/\"cpus\" : [ ${CPUS} ],/" basic.json
@@ -101,7 +101,7 @@ for i in UN DEUX TROIS; do
 done
 
 for i in UN DEUX TROIS; do
-			podman create --privileged --name $i-container -e TYPE=$TYPE -e i=$i -v $PATH/jsons:/jsons -v $PATH/log:/log quay.io/bschmaus/rt-app-container:latest
+			podman create --privileged --name $i-container -e TYPE=$TYPE -e i=$i -v $CURRPATH/jsons:/jsons -v $CURRPATH/log:/log quay.io/bschmaus/rt-app-container:latest
 			podman start $i-container
 			sleep 1 # to let the threads be created and have sequencial pid.. easier to see on kernelshark
 done
