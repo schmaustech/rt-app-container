@@ -1,6 +1,11 @@
+#!/bin/bash
+echo "Enable DEADLINE hrtick..."
 echo HRTICK_DL > /sys/kernel/debug/sched/features
+echo "Allow real-time tasks may use up to 100% of CPU times..."
 sysctl kernel.sched_rt_runtime_us=-1
+echo "Set preemptive scheduling to full..."
 echo full > /sys/kernel/debug/sched/preempt
+echo "Creating log and json directories..."
 if [ ! -d log ]; then
 	mkdir log
 fi
@@ -8,7 +13,7 @@ fi
 if [ ! -d jsons ]; then
 	mkdir jsons
 fi
-
+echo "Set variable values for run..."
 # Type should be one of the following: single, three, broken
 TYPE="three"
 CPUS="5"
@@ -31,11 +36,13 @@ sed -i "s/\"cpus\" :.*/\"cpus\" : [ ${CPUS} ],/" basic.json
 #
 # Once you know it, write it in the CAL bellow, otherwise
 # let the script figure it out.
+echo "Measure the CAL for core $CPUS..."
 CAL=
 if [ x$CAL == x ]; then
 	CAL=`rt-app basic.json 2>&1 | grep pLoad |  awk '{print $5}' | sed 's/ns//'`
 fi
 
+echo "Build up test json files..."
 for i in UN DEUX TROIS; do
 	case $TYPE in
 		single)
@@ -99,16 +106,17 @@ for i in UN DEUX TROIS; do
                         ;;
 		esac
 done
-
+echo "Create and run the pods..."
 for i in UN DEUX TROIS; do
 			podman create --privileged --name $i-container -e TYPE=$TYPE -e i=$i -v $CURRPATH/jsons:/jsons -v $CURRPATH/log:/log quay.io/bschmaus/rt-app-container:latest
 			podman start $i-container
 			sleep 1 # to let the threads be created and have sequencial pid.. easier to see on kernelshark
 done
-
+echo "Gather the trace-cmd recording..."
 trace-cmd record -e sched:sched_wakeup -e sched:sched_switch sleep 60
 
-sleep 30
+sleep 10
 
 # Remove all the pods we generated
+echo "Cleanup the pods..."
 podman rm -a
