@@ -13,6 +13,7 @@ RUN microdnf --enablerepo=codeready-builder-for-rhel-9-x86_64-rpms -y install js
 USER 1001
 RUN git clone https://github.com/scheduler-tools/rt-app.git && \
     cd rt-app && \
+    # Grab rt-app patch from Daniel's work
     curl https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/raw/dirty/to_send_rt-app.patch?ref_type=heads > to_send_rt-app.patch && \
     git apply to_send_rt-app.patch && \
     ./autogen.sh && \
