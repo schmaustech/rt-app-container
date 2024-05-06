@@ -13,16 +13,18 @@ Code is currently maintained on GitHub:
 
 [RT-APP Repository](https://github.com/scheduler-tools/rt-app)
 
+## Background
+
+The following work really builds upon the efforts Daniel Bristot de Oliveira of Red Hat built out in the following [reposititory](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads).  This work is based on explanations from Daniel about how to use multiple real-time workloads in a same CPU, consolidating applications trying to provide low response times/jitter for real-time tasks.  Within that body of work were a few examples of that explaination and usage.   Here in this repository we will take that effort and leverage it via a container.
+
 ## Contents of Repository
 
 * Dockerfile - To build the container to run the tests
 * entrypoint.sh - The script that runs within the container to kickoff the rt-app workload test
-* run.sh - The script that takes Daniel's work [here](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads) and collapses it into one script and uses containers
+* run.sh - The script that takes Daniel's work [here](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads) and collapses it into one script and launches rt-app via containers.
 * basic.json - This is used to compute the CAL (Function Call Interrupt) on a core
-* single.json - 
-* template.json -
-
-References to Daniel's work: [here](https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/tree/dirty?ref_type=heads)
+* single.json - Example json
+* template.json - Example json
 
 ### Build the Container
 
