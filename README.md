@@ -183,5 +183,47 @@ Complete!
 
 ### Running a Test
 
-After we have built our container and have installed and configured out how we can run a test.  The `run.sh` script can peform three different tests which are defined by the TYPE variable inside the script.  Those tests are: single, three and broken.
+After we have built our container and have installed and configured out how we can run a test.  The `run.sh` script can peform three different tests which are defined by the TYPE variable inside the script.  Those tests are: single, three and broken.  In our test below we set the TYPE to `three` and CPUS to core `5`.   Then ran the test which looks like the following:
+
+~~~bash
+# ./run.sh
+Enable DEADLINE hrtick...
+Allow real-time tasks may use up to 100% of CPU times...
+sysctl: setting key "kernel.sched_rt_runtime_us": Device or resource busy
+Set preemptive scheduling to full...
+Creating log and json directories...
+Set variable values for run...
+Measure the CAL for core 5...
+Build up test json files...
+Create and run the pods...
+34e09802149a25585d54f7ed2117202b69afa5619c08312e19e190d174a2842b
+UN-container
+5763bf6938629ef3cb2985a927a7978a64617fe0e937543b2b752b588507f773
+DEUX-container
+70671f8e1b42a7548f6515399ac8e3a8ad4087285e39e2ffcc049ef5db847df3
+TROIS-container
+Gather the trace-cmd recording...
+CPU0 data recorded at offset=0xaba000
+    294912 bytes in size
+CPU1 data recorded at offset=0xb02000
+    520192 bytes in size
+CPU2 data recorded at offset=0xb81000
+    360448 bytes in size
+CPU3 data recorded at offset=0xbd9000
+    303104 bytes in size
+CPU4 data recorded at offset=0xc23000
+    0 bytes in size
+CPU5 data recorded at offset=0xc23000
+    39940096 bytes in size
+CPU6 data recorded at offset=0x323a000
+    0 bytes in size
+CPU7 data recorded at offset=0x323a000
+    0 bytes in size
+Cleanup the pods...
+5763bf6938629ef3cb2985a927a7978a64617fe0e937543b2b752b588507f773
+34e09802149a25585d54f7ed2117202b69afa5619c08312e19e190d174a2842b
+70671f8e1b42a7548f6515399ac8e3a8ad4087285e39e2ffcc049ef5db847df3
+~~~
+
+Once the test has run take the trace.dat output and look at it in KernelShark!
 
