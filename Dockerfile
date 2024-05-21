@@ -14,9 +14,9 @@ RUN microdnf --enablerepo=codeready-builder-for-rhel-9-${ARCH}-rpms -y install j
 USER 1001
 RUN git clone https://github.com/scheduler-tools/rt-app.git && \
     cd rt-app && \
-    # Grab rt-app patch from Daniel's work
-    curl https://gitlab.com/rt-linux-tools/rt_consolidation_ex/-/raw/dirty/to_send_rt-app.patch?ref_type=heads > to_send_rt-app.patch && \
-    git apply to_send_rt-app.patch && \
+    # Grab updated multiarch rt-app patch based from Daniel's original patch updated with aarch64
+    curl https://raw.githubusercontent.com/schmaustech/rt-app-container/main/multiarch_to_send_rt-app.patch > multiarch_to_send_rt-app.patch && \
+    git apply multiarch_to_send_rt-app.patch && \
     ./autogen.sh && \
     ./configure && \
     make 
