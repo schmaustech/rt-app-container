@@ -3,7 +3,7 @@ index 673df44..405ee7f 100644
 --- a/src/rt-app.c
 +++ b/src/rt-app.c
 @@ -198,11 +198,36 @@ static int create_thread(const thread_data_t *td, int index, int forked, int nfo
-        return 0;
+ 	return 0;
  }
  
 +# if defined(__x86_64__)
@@ -38,14 +38,14 @@ index 673df44..405ee7f 100644
 -void waste_cpu_cycles(unsigned long long load_loops)
 +void frc(unsigned long long pval)
  {
-        double param, result;
-        double n;
+ 	double param, result;
+ 	double n;
 @@ -210,15 +235,32 @@ void waste_cpu_cycles(unsigned long long load_loops)
  
-        param = 0.95;
-        n = 4;
-+       result = ldexp(param , (ldexp(param , ldexp(param , n))));
-+       return;
+ 	param = 0.95;
+ 	n = 4;
++	result = ldexp(param , (ldexp(param , ldexp(param , n))));
++	return;
 +}
 +#endif
 +
@@ -55,22 +55,22 @@ index 673df44..405ee7f 100644
 + */
 +void waste_cpu_cycles(unsigned long long load_loops)
 +{
-+       uint64_t pval;
-+       unsigned long long i;
++	uint64_t pval;
++	unsigned long long i;
 +
-+       /* crystal ball, give me a number: 4 */
-        for (i = 0 ; i < load_loops ; i++) {
--               result = ldexp(param , (ldexp(param , ldexp(param , n))));
--               result = ldexp(param , (ldexp(param , ldexp(param , n))));
--               result = ldexp(param , (ldexp(param , ldexp(param , n))));
--               result = ldexp(param , (ldexp(param , ldexp(param , n))));
-+               frc(&pval);
-+               frc(&pval);
-+               frc(&pval);
-+               frc(&pval);
-        }
++	/* crystal ball, give me a number: 4 */
+ 	for (i = 0 ; i < load_loops ; i++) {
+-		result = ldexp(param , (ldexp(param , ldexp(param , n))));
+-		result = ldexp(param , (ldexp(param , ldexp(param , n))));
+-		result = ldexp(param , (ldexp(param , ldexp(param , n))));
+-		result = ldexp(param , (ldexp(param , ldexp(param , n))));
++		frc(&pval);
++		frc(&pval);
++		frc(&pval);
++		frc(&pval);
+ 	}
 +
-        return;
+ 	return;
  }
  
 +
@@ -78,42 +78,42 @@ index 673df44..405ee7f 100644
  * calibrate_cpu_cycles_1()
  * 1st method to calibrate the ns per loop value
 @@ -1181,6 +1223,19 @@ void *thread_body(void *arg)
-                log_ftrace(ft_data.marker_fd, FTRACE_TASK,
-                           "rtapp_main: event=clock_ref data=%llu",
-                           timespec_to_usec_ull(&t_zero));
+ 		log_ftrace(ft_data.marker_fd, FTRACE_TASK,
+ 			   "rtapp_main: event=clock_ref data=%llu",
+ 			   timespec_to_usec_ull(&t_zero));
 +
-+               /*
-+                * sleep until the next base_clock_abs time
-+                */
-+               if (opts.base_clock_abs >= 0) {
-+                       t_zero.tv_nsec = opts.base_clock_abs % 1000000000;
-+                       t_zero.tv_sec += (int) fmax(1, opts.base_clock_abs / 1000000000);
-+                       clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_first, NULL);
-+                       log_notice("t_zero = %llu\n", timespec_to_usec_ull(&t_zero));
-+                       log_ftrace(ft_data.marker_fd, FTRACE_TASK,
-+                                  "rtapp_main: event=base_clock_abs data=%llu",
-+                                  timespec_to_usec_ull(&t_zero));
-+               }
-        }
++		/*
++		 * sleep until the next base_clock_abs time
++		 */
++		if (opts.base_clock_abs >= 0) {
++			t_zero.tv_nsec = opts.base_clock_abs % 1000000000;
++			t_zero.tv_sec += (int) fmax(1, opts.base_clock_abs / 1000000000);
++			clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_first, NULL);
++			log_notice("t_zero = %llu\n", timespec_to_usec_ull(&t_zero));
++			log_ftrace(ft_data.marker_fd, FTRACE_TASK,
++				   "rtapp_main: event=base_clock_abs data=%llu",
++				   timespec_to_usec_ull(&t_zero));
++		}
+ 	}
  
-        if (!data->forked)
+ 	if (!data->forked)
 diff --git a/src/rt-app_parse_config.c b/src/rt-app_parse_config.c
 index 3fc699b..60d5a44 100644
 --- a/src/rt-app_parse_config.c
 +++ b/src/rt-app_parse_config.c
 @@ -1211,6 +1211,7 @@ parse_global(struct json_object *global, rtapp_options_t *opts)
-                opts->io_device = strdup("/dev/null");
-                opts->mem_buffer_size = DEFAULT_MEM_BUF_SIZE;
-                opts->cumulative_slack = 0;
-+               opts->base_clock_abs = -1;
-                return;
-        }
+ 		opts->io_device = strdup("/dev/null");
+ 		opts->mem_buffer_size = DEFAULT_MEM_BUF_SIZE;
+ 		opts->cumulative_slack = 0;
++		opts->base_clock_abs = -1;
+ 		return;
+ 	}
  
 @@ -1317,6 +1318,7 @@ parse_global(struct json_object *global, rtapp_options_t *opts)
-                                                        TRUE, DEFAULT_MEM_BUF_SIZE);
-        opts->cumulative_slack = get_bool_value_from(global, "cumulative_slack", TRUE, 0);
+ 							TRUE, DEFAULT_MEM_BUF_SIZE);
+ 	opts->cumulative_slack = get_bool_value_from(global, "cumulative_slack", TRUE, 0);
  
-+       opts->base_clock_abs = get_int_value_from(global, "base_clock_abs", TRUE, -1);
++	opts->base_clock_abs = get_int_value_from(global, "base_clock_abs", TRUE, -1);
  }
  
  static void
@@ -122,11 +122,11 @@ index bed8fa3..201f912 100644
 --- a/src/rt-app_types.h
 +++ b/src/rt-app_types.h
 @@ -289,6 +289,8 @@ typedef struct _rtapp_options_t {
-        char *io_device;
+ 	char *io_device;
  
-        int cumulative_slack;
+ 	int cumulative_slack;
 +
-+       int base_clock_abs;
++	int base_clock_abs;
  } rtapp_options_t;
  
  typedef struct _timing_point_t {
