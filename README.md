@@ -56,7 +56,7 @@ Red Hat Enterprise Linux release 9.3 (Plow)
 ~~~
 
 
-The first step we need to perform is to install the `tuned-profiles-realtime` and `tuned`.  I should note here that for aarch64 I needed to manually download the `tuned-profiles-realtime` from [Red Hat Portal](https://access.redhat.com) because even though the rpm package is a noarch it is only available in the x86_64 repos.  
+The first step we need to perform is to install the `tuned-profiles-realtime` and `tuned`.   I should note here that for aarch64 I needed to manually download the `tuned-profiles-realtime` from [Red Hat Portal](https://access.redhat.com) because even though the rpm package is a noarch it is only available in the x86_64 repos.  
 
 ~~~bash
 # dnf install tuned tuned-profiles-realtime
