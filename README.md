@@ -28,7 +28,7 @@ The following work really builds upon the efforts Daniel Bristot de Oliveira of 
 
 ### Build the Container
 
-We can build the container using the files in the repository.
+We can build the container using the files in the repository.  This container build process has been tested on both x86_64 and aarch64.
 
 ~~~bash
 # podman build -f Dockerfile --build-arg ARCH=`uname -i` -t quay.io/bschmaus/rt-app-container:latest
@@ -56,7 +56,7 @@ Red Hat Enterprise Linux release 9.3 (Plow)
 ~~~
 
 
-The first step we need to perform is to install the `tuned-profiles-realtime` and `tuned`.
+The first step we need to perform is to install the `tuned-profiles-realtime` and `tuned`.  I should note here that for aarch64 I needed to manually download the `tuned-profiles-realtime` from [Red Hat Portal](https://access.redhat.com) because even though the rpm package is a noarch it is only available in the x86_64 repos.  
 
 ~~~bash
 # dnf install tuned tuned-profiles-realtime
