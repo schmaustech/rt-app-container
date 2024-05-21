@@ -8,7 +8,8 @@ RUN microdnf -y install gcc git make numactl-devel numactl automake autoconf lib
 
 WORKDIR /home/build
 
-RUN microdnf --enablerepo=codeready-builder-for-rhel-9-x86_64-rpms -y install json-c-devel 
+ARG ARCH=
+RUN microdnf --enablerepo=codeready-builder-for-rhel-9-${ARCH}-rpms -y install json-c-devel 
 
 USER 1001
 RUN git clone https://github.com/scheduler-tools/rt-app.git && \
