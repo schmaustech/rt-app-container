@@ -31,7 +31,7 @@ The following work really builds upon the efforts Daniel Bristot de Oliveira of 
 We can build the container using the files in the repository.
 
 ~~~bash
-# podman build -f Dockerfile -t quay.io/bschmaus/rt-app-container:latest
+# podman build -f Dockerfile --build-arg ARCH=`uname -i` -t quay.io/bschmaus/rt-app-container:latest
 [1/2] STEP 1/7: FROM registry.access.redhat.com/ubi9/ubi-minimal:9.3 AS builder
 [1/2] STEP 2/7: RUN echo "builder:x:1001:" >> /etc/group &&     echo "builder:x:1001:1001:Builder:/home/build:/bin/bash" >> /etc/passwd &&     install -o builder -g builder -m 0700 -d /home/build
 --> Using cache 3a05dd8b2a4da05ef3af9f0ed71ad3033f7f9ecd36c1554a9fc12237f39a41a6
